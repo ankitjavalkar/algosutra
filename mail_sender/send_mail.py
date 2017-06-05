@@ -16,14 +16,25 @@ FROM_ADDR = 'senders_email'
 SUB = 'subject_line'
 
 # Add message body. No need to add salutations like Dear/Hello etc.
-MSG_BODY = ('Sample Message:'
-        'This mail has been sent by a Robot\n'
-        'that is going to take over the world\n'
-        '-----------\n'
-        'This script can now send a mail to anyone\n'
-        'you want from your email account'
-    )
+# MSG_BODY = ('Sample Message:'
+#         'This mail has been sent by a Robot\n'
+#         'that is going to take over the world\n'
+#         '-----------\n'
+#         'This script can now send a mail to anyone\n'
+#         'you want from your email account'
+#     )
 
+MSG_BODY = """\
+<html>
+  <head></head>
+  <body>
+    <p>Hi!<br>
+       How are you?<br>
+       Here is the <a href="http://www.python.org">link</a> you wanted.
+    </p>
+  </body>
+</html>
+"""
 
 def get_all_to_addr(csv_file):
     to_addr_list = []
@@ -45,8 +56,14 @@ def set_message(from_addr, to_addr, subject, name, msg_body):
         raise IncorrectValueError('The message body is not provided')
 
     salutation = "Dear {0}".format(name)
-    msg = "From: {0}\nTo: {1}\nSubject: {2}\n\n{3}\n{4}""".format(from_addr,
-        ", ".join(to_addr), subject, salutation, msg_body)
+    msg = MIMEMultipart('alternative')
+    msg['From'] = from_addr
+    msg['To'] = to_addr
+    msg['Subject'] = subject
+    msg.attach(salutation+'\n'+msg_body, 'html')
+
+    # msg = "From: {0}\nTo: {1}\nSubject: {2}\n\n{3}\n{4}""".format(from_addr,
+    #     ", ".join(to_addr), subject, salutation, msg_body)
     return msg
 
 
@@ -57,7 +74,7 @@ def send_mail(from_addr, to_addr, subject, message):
         server.ehlo()
         server.starttls()
         server.login(username,password)
-        server.sendmail(from_addr, to_addr, message)
+        server.sendmail(from_addr, to_addr, message.as_string())
         server.quit()
     except Exception as e:
         print e
