@@ -36,7 +36,7 @@ while True:
         with open('monitor.csv', 'wt') as csvfile:
             csv_writer = csv.writer(csvfile)
             for key, items in email_store.items():
-                csv_writer.writerow([key, items[0], items[1], items[2]])
+                csv_writer.writerow([key, items[0], items[1], items[2], items[3]])
 
     result, data = mail.search(None, "(FROM mailer-daemon@googlemail.com)")
 
@@ -69,10 +69,11 @@ while True:
         date = str(raw_date)
         mid = str(raw_mid)
         email_content = msg.get_payload()[0].get_payload()[0].get_payload()[0].get_payload()
+        mail_id = re.search(r'[\w\.-]+@[\w\.-]+\.\w+', email_content)
 
         if mid in email_store.keys():
             continue
         else:
-            email_store[mid] = [date, subject, email_content]
-
+            email_store[mid] = [date, subject, mail_id.group(0), email_content]
+    print("Done Looping")
     time.sleep(WAIT_TIME)
