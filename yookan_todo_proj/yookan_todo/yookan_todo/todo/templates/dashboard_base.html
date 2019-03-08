@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block nav %}
+<p>
+	{% if user.is_authenticated %}
+		<a href="{% url 'todo:dashboard' %}">Dashboard</a> |
+		<a href="{% url 'todo:tasks' %}">Tasks</a> |
+		<a href="{% url 'todo:task_lists' %}">Task Lists</a> |
+		<a href="{% url 'todo:categories' %}">Categories</a> |
+
+		<a href="{% url 'todo:add_task' %}">New Task</a> |
+		<a href="{% url 'todo:add_task_list' %}">New List</a> |
+		<a href="{% url 'todo:add_category' %}">New Category</a> |
+
+		<a href="{% url 'todo:logout' %}">Logout</a>
+	{% endif %}
+	
+</p>
+{% endblock %}
+
+{% block content %}
+{% endblock %}

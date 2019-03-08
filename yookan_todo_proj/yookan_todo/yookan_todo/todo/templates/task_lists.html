@@ -1,0 +1,13 @@
+{% extends "dashboard_base.html" %}
+
+{% block content %}
+All Task Lists:
+</p>
+<p>
+  <ol>
+    {% for list in task_lists %}
+      <li><a href="{% url 'todo:task_list_detail' list.id %}">{{ list.name }}</a>
+    {% endfor %}
+  </ol>
+</p>
+{% endblock %}
