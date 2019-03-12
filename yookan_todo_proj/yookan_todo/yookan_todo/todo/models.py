@@ -12,6 +12,9 @@ class Category(models.Model):
     def get_all_categories_for_user(creator):
         return Category.objects.filter(creator=creator).order_by('-created_on')
 
+    def __str__(self):
+        return self.name
+
 
 class TaskList(models.Model):
     created_on = models.DateTimeField(auto_now=True)
@@ -21,6 +24,9 @@ class TaskList(models.Model):
     @staticmethod
     def get_all_task_list_for_user(creator):
         return TaskList.objects.filter(creator=creator).order_by('-created_on')
+
+    def __str__(self):
+        return self.name
 
 
 class Task(models.Model):
@@ -52,3 +58,6 @@ class Task(models.Model):
             creator=creator,
             target_date=date,
         ).order_by('-created_on')
+
+    def __str__(self):
+        return self.title

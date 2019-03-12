@@ -9,4 +9,12 @@
       <button type="submit">Save</button>
     </form>
 </p>
+<p>
+  Tasks:
+  <ol>
+    {% for task in form.instance.tasks.all %}
+      <li><a href="{% url 'todo:task_detail' task.id %}">{{ task.title }}</a>
+    {% endfor %}
+  </ol>
+</p>
 {% endblock %}

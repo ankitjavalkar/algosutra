@@ -19,5 +19,6 @@ from django.urls import include, path
 urlpatterns = [
     # path('accounts/', include('django.contrib.auth.urls')),
 	path('', include('yookan_todo.todo.urls')),
+    path('api/', include('yookan_todo.todo.api_urls')),
     path('admin/', admin.site.urls),
 ]

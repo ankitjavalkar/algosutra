@@ -46,7 +46,8 @@ def task_detail(request, task_id=None):
             if task is None:
                 form.instance.creator = user
             form.save()
-        redirect('tasks', request=request)
+            task = form.instance
+        return redirect('todo:task_detail', task_id=task.id)
     else:
         form = TaskForm(instance=task)
 
@@ -58,13 +59,6 @@ def task_lists(request):
     task_lists = TaskList.get_all_task_list_for_user(user)
 
     return render(request, 'task_lists.html', {'task_lists': task_lists})
-
-
-def task_list(request, task_list_id=None):
-    user= request.user
-    task_list = get_object_or_404(TaskList, pk=task_list_id, creator=user)
-
-    return render(request, 'task_list.html', {'task_list': task_list})
 
 
 def task_list_detail(request, task_list_id=None):
@@ -80,7 +74,8 @@ def task_list_detail(request, task_list_id=None):
             if task_list is None:
                 form.instance.creator = user
             form.save()
-        redirect('todo.views.task_lists', request=request)
+            task_list = form.instance
+        return redirect('todo:task_list_detail', task_list_id=task_list.id)
     else:
         form = TaskListForm(instance=task_list)
 
@@ -106,7 +101,8 @@ def category_detail(request, category_id=None):
             if category is None:
                 form.instance.creator = user
             form.save()
-        redirect('categories', request=request)
+            category = form.instance
+        return redirect('todo:category_detail', category_id=category.id)
     else:
         form = CategoryForm(instance=category)
 
