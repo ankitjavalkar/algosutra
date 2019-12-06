@@ -1,10 +1,12 @@
 import pygame
 import random
 
+
 HEIGHT = 500
 WIDTH = 1000
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -32,11 +34,14 @@ class Walker():
         else:
             self.y = self.y - 1
 
+
 w = Walker(HEIGHT, WIDTH)
+
 
 def draw():
     w.walk()
     w.display()
+
 
 while True:
     draw()
