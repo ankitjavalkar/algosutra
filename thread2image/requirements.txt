@@ -1,5 +1,5 @@
 beautifulsoup4==4.7.1
 requests==2.21.0
 markdown==3.1
-Pillow==6.0.0
+Pillow==9.0.0
 praw==6.2.0
